@@ -27,7 +27,7 @@ public class AssertionsExamples {
 				.when()
 				.get("/search")
 				.then()
-				.body("numItems", equalTo(10));
+				.body("numItems", equalTo(11));
 		
 	}
 
@@ -35,12 +35,22 @@ public class AssertionsExamples {
 	@Test
 	public void test002() {
 
+
+
 	}
 
 
 	// 3) Check Single Name in ArrayList (Refurbished Apple iPod nano 16GB, Blue)
 	@Test
 	public void test003() {
+		given()
+				.queryParam("query","ipod")
+				.queryParam("apiKey",APIKEY)
+				.queryParam("format","json")
+				.when()
+				.get("/search")
+				.then()
+				.body("items.name",hasItem("Apple iPod touch 32GB"));
 
 	}
 
@@ -53,6 +63,14 @@ public class AssertionsExamples {
 	// 5) Verify the gift options for the first product (Checking Values inside Map using hasKey(allowGiftWrap))
 		@Test
 		public void test005() {
+			given()
+					.queryParam("query","ipod")
+					.queryParam("apiKey",APIKEY)
+					.queryParam("format","json")
+					.when()
+					.get("/search")
+					.then()
+					.body("items[0].giftOptions",hasKey("allowGiftWrap"));
 
 			}
 
@@ -60,14 +78,14 @@ public class AssertionsExamples {
 	@Test
 	public void test006() {
 
-				/*given()
+				given()
 				.queryParam("query","ipod")
 				.queryParam("apiKey",APIKEY)
 				.queryParam("format","json")
 				.when()
 				.get("/search")
 				.then()
-				.body("items.findAll{it.name=='Apple iPod touch 32GB'}", hasItems(hasEntry("name", "Apple iPod touch 32GB")));*/
+				.body("items.findAll{it.categoryPath=='Electronics/Portable Audio/Apple iPods/iPod Touch'}", hasItems(hasEntry("name", "Apple iPod touch 32GB")));
 				
 	}
 	
